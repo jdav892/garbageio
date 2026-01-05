@@ -41,14 +41,14 @@ void assert(int condition, const char* message)
     exit(1);
   }
 }
-
+//initializes VM
 VM* newVM()
 {
   VM* vm = malloc(sizeof(VM));
   vm->stackSize = 0;
   return vm;
 }
-
+// functions to manipulate the stack
 void push(VM* vm, Object* value)
 {
   assert(vm->stackSize < STACK_MAX, "Stack overflow");
