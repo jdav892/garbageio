@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
 #define STACK_MAX 256
 
@@ -33,6 +32,15 @@ typedef struct
   Object* stack[STACK_MAX];
   int stackSize;
 } VM;
+
+void assert(int condition, const char* message)
+{
+  if (!condition)
+  {
+    printf("%s\n", message);
+    exit(1);
+  }
+}
 
 VM* newVM()
 {
