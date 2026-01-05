@@ -33,6 +33,13 @@ typedef struct
   int stackSize;
 } VM;
 
+VM* newVM()
+{
+  VM* vm = malloc(sizeof(VM));
+  vm->stackSize = 0;
+  return vm;
+}
+
 int main()
 {
   return 0;
