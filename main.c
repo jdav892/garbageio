@@ -119,6 +119,28 @@ void markAll(VM* vm)
   }
 }
 
+void sweep(VM* vm)
+{
+  Object** object = &vm->firstObject;
+  while(*object)
+  {
+    if(!(*object)->marked)
+    {
+      //object wasn't reached so remove and free it
+      Object* unreached = *object;
+
+      *object = unreached->next;
+      free(unreached);
+    }
+    else
+    {
+      //this object was reached to unmark and move to next
+      (*object)->marked = 0;
+      object = &(*object)->next;
+    }
+  }
+}
+
 int main()
 {
   return 0;
