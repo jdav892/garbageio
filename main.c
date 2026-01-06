@@ -141,6 +141,12 @@ void sweep(VM* vm)
   }
 }
 
+void gc(VM* vm)
+{
+  markAll(vm);
+  sweep(vm);
+}
+
 int main()
 {
   return 0;
