@@ -189,7 +189,20 @@ void objectPrint(Object* object)
   }
 }
 
+void test1()
+{
+  printf("Test 1: Objects on stack are preserved.\n");
+  VM* vm = newVM();
+  pushInt(vm, 1);
+  pushInt(vm, 2);
+
+  gc(vm);
+  assert(vm->numObjects == 2, "Should have preserved objects.");
+  freeVM(vm);
+}
+
 int main()
 {
+  test1();
   return 0;
 }
