@@ -75,6 +75,16 @@ void pushInt(VM* vm, int intValue)
   push(vm, object);
 }
 
+Object* pushPair(VM* vm)
+{
+  Object* object = newObject(vm, OBJ_PAIR);
+  object->tail = pop(vm);
+  object->head = pop(vm);
+
+  push(vm, object);
+  return object;
+}
+
 int main()
 {
   return 0;
