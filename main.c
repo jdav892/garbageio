@@ -170,6 +170,25 @@ void freeVM(VM *vm)
   gc(vm);
   free(vm);
 }
+
+void objectPrint(Object* object)
+{
+  switch(object->type)
+  {
+    case OBJ_INT:
+      printf("%d", object->value);
+      break;
+
+    case OBJ_PAIR:
+      printf("(");
+      objectPrint(object->head);
+      printf(", ");
+      objectPrint(object->tail);
+      printf(")");
+      break;
+  }
+}
+
 int main()
 {
   return 0;
