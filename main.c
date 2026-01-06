@@ -11,6 +11,7 @@ typedef enum
 
 typedef struct sObject
 {
+  unsigned char marked;
   ObjectType type;
 
   union
@@ -83,6 +84,14 @@ Object* pushPair(VM* vm)
 
   push(vm, object);
   return object;
+}
+
+void markAll(VM* vm)
+{
+  for (int i = 0; i < vm->stackSize; i++)
+  {
+    mark(vm->stack[i]);
+  }
 }
 
 int main()
