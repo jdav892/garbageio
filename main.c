@@ -164,6 +164,12 @@ void gc(VM* vm)
   printf("Collected %d objects, %d remaining. \n", numObjects - vm->numObjects, vm->numObjects);
 }
 
+void freeVM(VM *vm)
+{
+  vm->stackSize = 0;
+  gc(vm);
+  free(vm);
+}
 int main()
 {
   return 0;
