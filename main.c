@@ -143,6 +143,7 @@ void sweep(VM* vm)
 
       *object = unreached->next;
       free(unreached);
+      vm->numObjects--;
     }
     else
     {
@@ -201,8 +202,23 @@ void test1()
   freeVM(vm);
 }
 
+void test2()
+{
+  printf("Test2: Unreached objects are collected.\n");
+  VM* vm = newVM();
+  pushInt(vm, 1);
+  pushInt(vm, 2);
+  pop(vm);
+  pop(vm);
+
+  gc(vm);
+  assert(vm->numObjects == 0, "Should have collected objects.");
+  freeVM(vm);
+}
+
 int main()
 {
   test1();
+  test2();
   return 0;
 }
