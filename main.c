@@ -88,6 +88,12 @@ Object* pushPair(VM* vm)
 
 void mark(Object* object)
 {
+  /*
+   * If already marked, finish.
+   * Check this first to avoid recursing on cycles in object graph
+   * */
+  if(object->marked) return;
+
   object->marked = 1;
 
   if(object->type == OBJ_PAIR)
