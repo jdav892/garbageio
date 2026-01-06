@@ -61,6 +61,13 @@ Object* pop(VM* vm)
   return vm->stack[--vm->stackSize];
 }
 
+Object* newObject(VM* vm, ObjectType type)
+{
+  Object* object = malloc(sizeof(Object));
+  object->type = type;
+  return object;
+}
+
 int main()
 {
   return 0;
