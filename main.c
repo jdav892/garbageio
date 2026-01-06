@@ -159,6 +159,9 @@ void gc(VM* vm)
 
   markAll(vm);
   sweep(vm);
+
+  vm->maxObjects = vm->numObjects == 0 ? INITIAL_GC_THRESHOLD : vm->numObjects * 2;
+  printf("Collected %d objects, %d remaining. \n", numObjects - vm->numObjects, vm->numObjects);
 }
 
 int main()
