@@ -39,6 +39,7 @@ typedef struct
   int stackSize;
 } VM;
 
+void gc(VM* vm);
 void assert(int condition, const char* message)
 {
   if (!condition)
@@ -72,6 +73,7 @@ Object* pop(VM* vm)
 
 Object* newObject(VM* vm, ObjectType type)
 {
+  if(vm->numObjects == vm->maxObjects) gc(vm);
   Object* object = malloc(sizeof(Object));
   object->type = type;
   object->marked = 0;
@@ -79,6 +81,7 @@ Object* newObject(VM* vm, ObjectType type)
   //Insert into the list of allocated objects
   object->next = vm->firstObject;
   vm->firstObject = object;
+  vm->numObjects++;
 
   return object;
 }
@@ -149,8 +152,12 @@ void sweep(VM* vm)
 
 void gc(VM* vm)
 {
+  int numObjects = vm->numObjects;
+
   markAll(vm);
   sweep(vm);
+
+  vm->maxObjects = vm->numObjects * 2;
 }
 
 int main()
