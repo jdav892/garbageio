@@ -31,6 +31,7 @@ typedef struct sObject
 
 typedef struct
 {
+  Object* firstObject;
   Object* stack[STACK_MAX];
   int stackSize;
 } VM;
