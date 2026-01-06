@@ -89,6 +89,12 @@ Object* pushPair(VM* vm)
 void mark(Object* object)
 {
   object->marked = 1;
+
+  if(object->type == OBJ_PAIR)
+  {
+    mark(object->head);
+    mark(object->tail);
+  }
 }
 
 void markAll(VM* vm)
