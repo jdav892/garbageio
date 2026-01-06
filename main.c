@@ -86,6 +86,11 @@ Object* pushPair(VM* vm)
   return object;
 }
 
+void mark(Object* object)
+{
+  object->marked = 1;
+}
+
 void markAll(VM* vm)
 {
   for (int i = 0; i < vm->stackSize; i++)
