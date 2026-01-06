@@ -3,6 +3,7 @@
 
 #define STACK_MAX 256
 #define INITIAL_GC_THRESHOLD 6
+
 typedef enum
 {
   OBJ_INT,
@@ -40,6 +41,7 @@ typedef struct
 } VM;
 
 void gc(VM* vm);
+
 void assert(int condition, const char* message)
 {
   if (!condition)
@@ -53,6 +55,7 @@ VM* newVM()
 {
   VM* vm = malloc(sizeof(VM));
   vm->stackSize = 0;
+  vm->firstObject = NULL;
   vm->numObjects = 0;
   vm->maxObjects = INITIAL_GC_THRESHOLD;
 
@@ -156,8 +159,6 @@ void gc(VM* vm)
 
   markAll(vm);
   sweep(vm);
-
-  vm->maxObjects = vm->numObjects * 2;
 }
 
 int main()
