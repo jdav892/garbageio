@@ -13,7 +13,7 @@ typedef struct sObject
 {
   unsigned char marked;
   ObjectType type;
-  struct object* next;
+  struct sObject* next;
 
   union
   {
@@ -68,6 +68,12 @@ Object* newObject(VM* vm, ObjectType type)
 {
   Object* object = malloc(sizeof(Object));
   object->type = type;
+  object->marked = 0;
+
+  //Insert into the list of allocated objects
+  object->next = vm->firstObject;
+  vm->firstObject = object;
+
   return object;
 }
 
