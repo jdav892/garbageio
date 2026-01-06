@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #define STACK_MAX 256
-
+#define INITIAL_GC_THRESHOLD 6
 typedef enum
 {
   OBJ_INT,
@@ -13,6 +13,7 @@ typedef struct sObject
 {
   unsigned char marked;
   ObjectType type;
+  //the next object in the linked list of heap allocated objects
   struct sObject* next;
 
   union
@@ -31,6 +32,8 @@ typedef struct sObject
 
 typedef struct
 {
+  int numObjects; //total number of currently allocated objects
+  int maxObjects; //number of objects required to trigger GC
   Object* firstObject;
   Object* stack[STACK_MAX];
   int stackSize;
@@ -49,6 +52,9 @@ VM* newVM()
 {
   VM* vm = malloc(sizeof(VM));
   vm->stackSize = 0;
+  vm->numObjects = 0;
+  vm->maxObjects = INITIAL_GC_THRESHOLD;
+
   return vm;
 }
 // functions to manipulate the stack
