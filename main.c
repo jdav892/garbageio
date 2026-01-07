@@ -253,11 +253,32 @@ void test4()
   freeVM(vm);
 }
 
+void perfTest()
+{
+  printf("Performance Test.\n");
+  VM* vm = newVM();
+
+  for(int i = 0; i < 1000; i++)
+  {
+    for(int j = 0; j < 20; j++)
+    {
+      pushInt(vm, i);
+    }
+
+    for(int k = 0; k < 20; k++)
+    {
+      pop(vm);
+    }
+  }
+  freeVM(vm);
+}
+
 int main()
 {
   test1();
   test2();
   test3();
   test4();
+  perfTest();
   return 0;
 }
