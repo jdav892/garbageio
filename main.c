@@ -233,10 +233,31 @@ void test3()
   freeVM(vm);
 }
 
+void test4()
+{
+  printf("Test 4: Handle cycles.\n");
+  VM* vm = newVM();
+  pushInt(vm, 1);
+  pushInt(vm, 2);
+  Object* a = pushPair(vm);
+  pushInt(vm, 3);
+  pushInt(vm, 4);
+  Object* b = pushPair(vm);
+
+  // set up a cycle and make 2/4 unreachable and collectible
+  a->tail = b;
+  b->tail = a;
+
+  gc(vm);
+  assert(vm->numObjects == 4, "Should have collected objects.");
+  freeVM(vm);
+}
+
 int main()
 {
   test1();
   test2();
   test3();
+  test4();
   return 0;
 }
