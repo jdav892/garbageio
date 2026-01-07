@@ -216,9 +216,27 @@ void test2()
   freeVM(vm);
 }
 
+void test3()
+{
+  printf("Test 3: Reach nested objects.\n");
+  VM* vm = newVM();
+  pushInt(vm, 1);
+  pushInt(vm, 2);
+  pushPair(vm);
+  pushInt(vm, 3);
+  pushInt(vm, 4);
+  pushPair(vm);
+  pushPair(vm);
+
+  gc(vm);
+  assert(vm->numObjects == 7, "Should have reached objects.");
+  freeVM(vm);
+}
+
 int main()
 {
   test1();
   test2();
+  test3();
   return 0;
 }
